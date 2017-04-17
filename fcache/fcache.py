@@ -17,7 +17,8 @@ def fcache(f):
             f_closure_values = tuple(map(lambda c: c.cell_contents, f.__closure__))
         else:
             f_closure_values = None
-        call_hash = stable_hash((f, args, kwargs, f_closure_values))
+        bounded_obj = getattr(f, '__self__', None)
+        call_hash = stable_hash((f, args, kwargs, f_closure_values, bounded_obj))
         if call_hash in cache:
             return cache[call_hash]
         else:

@@ -116,7 +116,25 @@ def test_closure():
     assert cached_res == get_res
     assert cached_res is not get_res
 
-# TODO Test class function
+
+# Test class function
+class SimpleClass:
+    def __init__(self):
+        self.n = 0
+    def inc(self):
+        self.n += 1
+    def get(self):
+        return self.n
+
+def test_bound_method():
+    obj = SimpleClass()
+    fun = fcache(obj.get)
+    assert fun() == 0
+    obj.inc()
+    obj.inc()
+    assert fun() == 2
+
+
 # TODO Test well behaived
 
 # Test with numpy and pandas - in a separate file
