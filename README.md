@@ -14,7 +14,7 @@ fcache caches the result of function calls to memory or disk. When the same func
 
 ## Installation
 
-    pip install git+https://github.com/svetlinm/fcache.git
+    pip3 install git+https://github.com/svetlin-mladenov/fcache.git
 
 Please note that `fcache` requires python 3.
 
@@ -40,7 +40,7 @@ from fcache import fcache
 @fcache
 def fib(n):
 	if n < 2: return n
-	return f(n-1) + fib(n-2)
+	return fib(n-1) + fib(n-2)
 ```
 
 ## Cavities
