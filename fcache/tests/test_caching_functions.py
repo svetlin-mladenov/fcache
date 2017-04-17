@@ -12,6 +12,10 @@ class Num:
     def __hash__(self):
         return hash(self.n)
 
+    def __iadd__(self, other):
+        self.n += other.n
+        return self
+
 # Test global function
 
 global_function_call_counter = 0
@@ -88,7 +92,30 @@ def test_kwargs():
     assert fun(10, add=20) == 30
 
 
-# TODO Test closure
+# Test closure
+def test_closure():
+    def outer():
+        n = Num(0)
+        @fcache
+        def mut():
+            nonlocal n
+            n += Num(1)
+            return n
+        @fcache
+        def get():
+            return n
+        return mut, get
+    mut, get = outer()
+    assert mut() == Num(1)
+    assert get() == Num(1)
+    assert mut() == Num(2)
+    assert mut() == Num(3)
+    get_res = get()
+    cached_res = get()
+    assert get_res  == Num(3)
+    assert cached_res == get_res
+    assert cached_res is not get_res
+
 # TODO Test class function
 # TODO Test well behaived
 

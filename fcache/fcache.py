@@ -13,7 +13,11 @@ def get_global_cache():
 def fcache(f):
     cache = get_global_cache()
     def decorated(*args, **kwargs):
-        call_hash = stable_hash((f, args, kwargs))
+        if f.__closure__:
+            f_closure_values = tuple(map(lambda c: c.cell_contents, f.__closure__))
+        else:
+            f_closure_values = None
+        call_hash = stable_hash((f, args, kwargs, f_closure_values))
         if call_hash in cache:
             return cache[call_hash]
         else:
