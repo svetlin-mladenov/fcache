@@ -1,6 +1,8 @@
 # fcache
 fcache caches the result of function calls to memory or disk. When the same function is called with the same arguments the cached result is returned instead of recomputing it. This behavior is ideal for caching results of long running, computationally intensive functions. fcache has been designed for data heavy tasks and works well with `numpy arrays`, `panda dataframes` and inside `ipython` notebooks.
 
+[![Build Status](https://travis-ci.org/svetlin-mladenov/fcache.svg?branch=master)](https://travis-ci.org/svetlin-mladenov/fcache)
+
 
 ## Features
 
