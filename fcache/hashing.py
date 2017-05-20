@@ -1,7 +1,6 @@
 import hashlib
 import pickle
 import io
-from collections import OrderedDict
 
 
 class StablePickler(pickle.Pickler):

@@ -15,8 +15,8 @@ def get_hash(repr_):
     env = os.environ
     cmd_line = [sys.executable, '-c', get_hash_command(repr_)]
     p = subprocess.Popen(cmd_line, stdin=subprocess.PIPE,
-                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                             env=env)
+                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                         env=env)
     out, err = p.communicate()
     return int(out.strip())
 

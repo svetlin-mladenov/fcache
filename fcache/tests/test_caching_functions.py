@@ -2,6 +2,7 @@ from fcache import fcache
 
 fcache.clear_at_exit = True
 
+
 class Num:
     def __init__(self, n):
         self.n = n
@@ -16,13 +17,17 @@ class Num:
         self.n += other.n
         return self
 
+
 # Test global function
 
 global_function_call_counter = 0
+
+
 def global_function(n):
     global global_function_call_counter
     global_function_call_counter += 1
     return n * n
+
 
 def test_global_function():
     cached = fcache(global_function)
@@ -54,7 +59,7 @@ def test_local_function():
 
 # Test lambda
 def test_lambda():
-    lamb = lambda x: x
+    lamb = lambda x: x  # NOQA
     cached = fcache(lamb)
     for i in range(5):
         for n in range(5):
@@ -66,6 +71,7 @@ def test_lambda():
                 assert f_input is cached_res
             else:
                 assert f_input is not cached_res
+
 
 # Test redifining a function
 def test_redefining_a_function():
@@ -94,13 +100,16 @@ def test_kwargs():
 
 # Test closure
 def test_closure():
+
     def outer():
         n = Num(0)
+
         @fcache
         def mut():
             nonlocal n
             n += Num(1)
             return n
+
         @fcache
         def get():
             return n
@@ -112,7 +121,7 @@ def test_closure():
     assert mut() == Num(3)
     get_res = get()
     cached_res = get()
-    assert get_res  == Num(3)
+    assert get_res == Num(3)
     assert cached_res == get_res
     assert cached_res is not get_res
 
@@ -121,10 +130,13 @@ def test_closure():
 class SimpleClass:
     def __init__(self):
         self.n = 0
+
     def inc(self):
         self.n += 1
+
     def get(self):
         return self.n
+
 
 def test_bound_method():
     obj = SimpleClass()

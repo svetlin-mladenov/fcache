@@ -1,5 +1,6 @@
 from fcache.file_cache import FileCache
 
+
 def test_caching_values(tmpdir):
     cache = FileCache(str(tmpdir))
     kvs = [(1, 1), (2, 20), (3, 300)]
@@ -28,6 +29,7 @@ def test_cache_clearing(tmpdir):
     cache.clear()
     assert len(cache) == 0
 
+
 def test_cache_limit(tmpdir):
     record_size = 512
     cache = FileCache(str(tmpdir), capacity=int(2.5*record_size))
@@ -44,6 +46,7 @@ def test_cache_limit(tmpdir):
     assert 2 not in cache
     assert 1 in cache
     assert 3 in cache
+
 
 def test_cache_limit_restore_from_disk(tmpdir):
     record_size = 512

@@ -9,10 +9,12 @@ class LruItem:
         self.next = next
         self.key = key
 
+
 # TODO use slots
 class LruList:
     def __init__(self, next):
         self.next = next
+
 
 class FileCache:
     def __init__(self, cache_dir, capacity=80*1024*1024*1024):
@@ -27,7 +29,8 @@ class FileCache:
         disk_files = []
         for cached_pickle in os.listdir(cache_dir):
             key, ext = os.path.splitext(cached_pickle)
-            if ext != '.pkl': continue
+            if ext != '.pkl':
+                continue
             key = int(key)
             full_fn = os.path.join(cache_dir, cached_pickle)
             disk_files.append((full_fn, os.stat(full_fn), key))
@@ -75,7 +78,7 @@ class FileCache:
 
     def pop_lru(self):
         lru = self._lru_items.next
-        #del self[lru.key]
+        # del self[lru.key]
         del self._cached_keys[lru.key]
         size = os.stat(self.cache_fn(lru.key)).st_size
         os.unlink(self.cache_fn(lru.key))

@@ -8,9 +8,11 @@ logger = logging.getLogger('fcache')
 
 GLOBAL_CACHE = FileCache('.fcache')
 
+
 def get_global_cache():
     global GLOBAL_CACHE
     return GLOBAL_CACHE
+
 
 def get_func_fullname(f, bounded_obj):
     f_name = getattr(f, '__module__', '') + '.'
@@ -21,6 +23,7 @@ def get_func_fullname(f, bounded_obj):
 
 def fcache(f):
     cache = get_global_cache()
+
     def decorated(*args, **kwargs):
         if f.__closure__:
             f_closure_values = tuple(map(lambda c: c.cell_contents, f.__closure__))
@@ -38,7 +41,11 @@ def fcache(f):
             cache[call_hash] = ret_val
             return ret_val
     return decorated
+
+
+# XXX replace fcache by a object
 fcache.clear_at_exit = False
+
 
 @atexit.register
 def maybe_clear_at_exit():
